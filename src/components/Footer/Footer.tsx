@@ -63,13 +63,19 @@ function Footer() {
         ))}
       </div>
       <div style={{ display: 'flex', gap: 10 }}>
-        <a href="https://twitter.com/aaveaave?s=11&t=ZixFmUt1SIHLEMvx18gUGw">
+        <a
+          href="https://twitter.com/aaveaave?s=11&t=ZixFmUt1SIHLEMvx18gUGw"
+          style={{ color: '#A5A8B6', textDecoration: 'none' }}
+        >
           <BiLogoTwitter size={27} />
         </a>
-        <a href="https://github.com/aave">
+        <a href="https://github.com/aave" style={{ color: '#A5A8B6', textDecoration: 'none' }}>
           <BiLogoGithub size={27} />
         </a>
-        <a href="https://discord.com/invite/aave">
+        <a
+          href="https://discord.com/invite/aave"
+          style={{ color: '#A5A8B6', textDecoration: 'none' }}
+        >
           <BiLogoDiscordAlt size={27} />
         </a>
       </div>
