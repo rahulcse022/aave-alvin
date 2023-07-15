@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BiLogoTwitter, BiLogoGithub, BiLogoDiscordAlt } from 'react-icons/bi';
 function Footer() {
-  const [IsAnalytics, setIsAnalytics] = useState(false);
+  const [IsAnalytics, setIsAnalytics] = useState(true);
   const links = [
     {
       title: 'Terms',

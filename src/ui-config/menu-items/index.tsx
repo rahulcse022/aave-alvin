@@ -1,11 +1,11 @@
-import { BookOpenIcon, CreditCardIcon, QuestionMarkCircleIcon } from '@heroicons/react/outline';
+import { BookOpenIcon, QuestionMarkCircleIcon } from '@heroicons/react/outline';
 import { t } from '@lingui/macro';
 import { ReactNode } from 'react';
 import { ROUTES } from 'src/components/primitives/Link';
 import { ENABLE_TESTNET } from 'src/utils/marketsAndNetworksConfig';
 
-import DiscordIcon from '/public/icons/discord.svg';
-import GithubIcon from '/public/icons/github.svg';
+// import DiscordIcon from '/public/icons/discord.svg';
+// import GithubIcon from '/public/icons/github.svg';
 
 import { MarketDataType } from '../marketsConfig';
 
